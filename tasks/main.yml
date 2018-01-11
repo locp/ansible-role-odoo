@@ -1,0 +1,34 @@
+---
+# tasks file for odoo
+- name: Enable Odoo 9 YUM repository
+  yum_repository:
+    name: odoo
+    description: Odoo Nightly repository
+    baseurl: http://nightly.odoo.com/9.0/nightly/rpm/
+    gpgcheck: yes
+    gpgkey: https://nightly.odoo.com/odoo.key
+  when:
+    - odoo_enable_odoo9_repo
+    - ansible_os_family == 'RedHat'
+
+- name: Enable Odoo 10 YUM repository
+  yum_repository:
+    name: odoo
+    description: Odoo Nightly repository
+    baseurl: http://nightly.odoo.com/10.0/nightly/rpm/
+    gpgcheck: yes
+    gpgkey: https://nightly.odoo.com/odoo.key
+  when:
+    - odoo_enable_odoo10_repo
+    - ansible_os_family == 'RedHat'
+
+- name: Enable Odoo 11 YUM repository
+  yum_repository:
+    name: odoo
+    description: Odoo Nightly repository
+    baseurl: http://nightly.odoo.com/11.0/nightly/rpm/
+    gpgcheck: yes
+    gpgkey: https://nightly.odoo.com/odoo.key
+  when:
+    - odoo_enable_odoo11_repo
+    - ansible_os_family == 'RedHat'
