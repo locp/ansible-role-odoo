@@ -32,3 +32,16 @@
   when:
     - odoo_enable_odoo11_repo
     - ansible_os_family == 'RedHat'
+
+- name: Wkhtmltopdf package
+  package:
+    name: wkhtmltopdf
+  when: odoo_install_wkhtmltopdf
+
+- name: Odoo package
+  package:
+    name: "{{ odoo_package_name }}"
+
+- name: Show me the data
+  debug:
+    msg: "{{ odoo_settings }}"
