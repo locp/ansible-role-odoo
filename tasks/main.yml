@@ -44,7 +44,7 @@
 
 - name: Odoo configuration section
   ini_file:
-    path: /etc/odoo/odoo.conf
+    path: "{{ odoo_config_file }}"
     section: options
     option: "{{ item }}"
     value: "{{ odoo_settings[item] }}"
