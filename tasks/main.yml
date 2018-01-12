@@ -42,6 +42,22 @@
   package:
     name: "{{ odoo_package_name }}"
 
-- name: Show me the data
-  debug:
-    msg: "{{ odoo_settings }}"
+- name: Odoo configuration section
+  ini_file:
+    path: /etc/odoo/odoo.conf
+    section: options
+    option: "{{ item }}"
+    value: "{{ odoo_settings[item] }}"
+    owner: odoo
+    group: odoo
+    mode: 0650
+  when: odoo_settings is defined
+  with_items: "{{ odoo_settings }}"
+  notify:
+    - restart odoo
+
+- name: Odoo Service
+  service:
+    enabled: yes
+    name: odoo
+    state: started

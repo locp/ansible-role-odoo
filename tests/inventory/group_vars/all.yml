@@ -2,10 +2,8 @@
 odoo_install_wkhtmltopdf: true
 
 odoo_settings:
-  options:
-    admin_passwd: XXX_TOP_SECRET_XXX
-    db_host: False
-    db_port: False
-    db_user: odoo
-    db_password: False
-    addons_path: /usr/lib/python2.7/dist-packages/openerp/addons
+  admin_passwd: XXX_TOP_SECRET_XXX
+  db_host: False
+  db_port: False
+  db_user: odoo
+  db_password: False

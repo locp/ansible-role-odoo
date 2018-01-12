@@ -1,6 +1,6 @@
 require_relative 'spec_helper'
 
-describe 'CentOS7 odoo 11 role' do
+describe 'Fedora 26 odoo 11 role' do
   describe yumrepo('odoo') do
     it { should exist }
   end
@@ -19,5 +19,13 @@ describe 'CentOS7 odoo 11 role' do
 
   describe service('odoo') do
     it { should be_running }
+  end
+
+  describe file('/etc/odoo/odoo.conf') do
+    it { should exist }
+  end
+
+  describe file('/etc/odoo/odoo.conf') do
+    its(:content) { should match(/^admin_passwd = XXX_TOP_SECRET_XXX/) }
   end
 end
