@@ -63,4 +63,3 @@ Developed by the
 
 To raise issues or make contributions, please go to
 https://github.com/locp/ansible-role-odoo
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
