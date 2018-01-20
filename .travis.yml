@@ -1,0 +1,44 @@
+---
+language: python
+
+sudo: true
+
+cache:
+  directories:
+  - /home/travis/.rvm
+  - /home/travis/.cache/pip
+  - /home/travis/virtualenv
+
+addons:
+  apt:
+    packages:
+    - python-pip
+    - ruby-bundler
+
+# Install ansible
+install:
+  - bundle install
+  - pip install -r requirements.txt
+
+  # Check versions
+  - ansible --version
+  - ansible-lint --version
+  - rubocop --version
+
+script:
+  - bundle exec rubocop -ES
+  - ansible-lint -pv .
+  - bundle exec kitchen test $INSTANCE
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
+
+matrix:
+  fast_finish: true
+  include:
+  - python: 2.7
+    env: INSTANCE="CentOS7-odoo9-centos-7"
+  - python: 2.7
+    env: INSTANCE="CentOS7-odoo10-centos-7"
+  - python: 2.7
+    env: INSTANCE="Fedora26-odoo11-fedora-26"

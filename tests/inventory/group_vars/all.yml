@@ -1,0 +1,9 @@
+---
+odoo_install_wkhtmltopdf: true
+
+odoo_settings:
+  admin_passwd: XXX_TOP_SECRET_XXX
+  db_host: False
+  db_port: False
+  db_user: odoo
+  db_password: False

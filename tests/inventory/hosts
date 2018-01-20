@@ -1,0 +1,12 @@
+odoo9.local
+odoo10.local
+odoo11.local
+
+[odoo9]
+odoo9.local
+
+[odoo10]
+odoo10.local
+
+[odoo11]
+odoo11.local
