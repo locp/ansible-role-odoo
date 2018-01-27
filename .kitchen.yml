@@ -49,7 +49,6 @@ provisioner:
   ansible_verbose: false
   # ansible_verbosity: 3
   hosts: all
-  idempotency_test: true
   name: ansible_playbook
   require_ansible_repo: false
   require_chef_for_busser: false
@@ -67,6 +66,7 @@ suites:
       patterns:
         - tests/spec/centos7_odoo9_spec.rb
     provisioner:
+      idempotency_test: true
       playbook: tests/test9.yml
     driver_config:
       hostname: odoo9.local
@@ -78,6 +78,19 @@ suites:
       patterns:
         - tests/spec/centos7_odoo10_spec.rb
     provisioner:
+      idempotency_test: true
+      playbook: tests/test10.yml
+    driver_config:
+      hostname: odoo10.local
+    includes:
+      - centos-7
+
+  - name: CentOS7-odoo10-check
+    verifier:
+      patterns:
+        - tests/spec/centos7_odoo10_spec.rb
+    provisioner:
+      ansible_check: true
       playbook: tests/test10.yml
     driver_config:
       hostname: odoo10.local
@@ -89,6 +102,7 @@ suites:
       patterns:
         - tests/spec/fedora26_odoo11_spec.rb
     provisioner:
+      idempotency_test: true
       playbook: tests/test11.yml
     driver_config:
       hostname: odoo11.local
@@ -100,6 +114,7 @@ suites:
   #     patterns:
   #       - spec/ubuntu14_spec.rb
   #   provisioner:
+  #   idempotency_test: true
   #     playbook: test.yml
   #   includes:
   #     - ubuntu-14.04

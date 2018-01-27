@@ -41,4 +41,6 @@ matrix:
   - python: 2.7
     env: INSTANCE="CentOS7-odoo10-centos-7"
   - python: 2.7
+    env: INSTANCE="CentOS7-odoo10-check"
+  - python: 2.7
     env: INSTANCE="Fedora26-odoo11-fedora-26"
