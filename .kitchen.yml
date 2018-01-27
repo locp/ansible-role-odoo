@@ -86,9 +86,6 @@ suites:
       - centos-7
 
   - name: CentOS7-odoo10-check
-    verifier:
-      patterns:
-        - tests/spec/centos7_odoo10_spec.rb
     provisioner:
       ansible_check: true
       playbook: tests/test10.yml

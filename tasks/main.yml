@@ -41,6 +41,7 @@
 - name: Odoo package
   package:
     name: "{{ odoo_package_name }}"
+  when: not ansible_check_mode
 
 - name: Odoo configuration section
   ini_file:
@@ -51,13 +52,16 @@
     owner: odoo
     group: odoo
     mode: 0650
-  when: odoo_settings is defined
   with_items: "{{ odoo_settings }}"
   notify:
     - restart odoo
+  when:
+    - odoo_settings is defined
+    - not ansible_check_mode
 
 - name: Odoo Service
   service:
     enabled: yes
     name: odoo
     state: started
+  when: not ansible_check_mode
