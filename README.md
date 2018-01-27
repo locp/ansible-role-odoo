@@ -1,38 +1,65 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+Ansible role to install Odoo Community.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This role assists in installing and configuring the Odoo Community edition.
+Odoo 9 and 10 can be installed on CentOS 7, but Odoo 11 requires a newer
+version of Python than is available on CentOS.  Therefore if you still want
+to use the RedHat family, you will need to use Fedora 26.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
-
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+| Variable Name           | Default Value         | Description |
+|-------------------------|-----------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
+|odoo_config_file         | '/etc/odoo/odoo.conf' | The full path to the configuration file.                                                                                                     |
+|odoo_enable_odoo9_repo   | false                 | Should the Odoo 9 repository be configured.                                                                                                  |
+|odoo_enable_odoo10_repo  | false                 | Should the Odoo 10 repository be configured.                                                                                                 |
+|odoo_enable_odoo11_repo  | false                 | Should the Odoo 11 repository be configured.                                                                                                 |
+|odoo_install_wkhtmltopdf | false                 | Should the Wkhtmltopdf be installed.                                                                                                         |
+|odoo_package_name        | odoo                  | The name of the Odoo package (optionally include the version number).  Will need to be changed to `/etc/odoo/openerp-server.conf` for Odoo 9.|
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Configure the following variables:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```YAML
+---
+odoo_enable_odoo10_repo: true
+odoo_install_wkhtmltopdf: true
+odoo_settings:
+  admin_passwd: XXX_TOP_SECRET_XXX
+  db_host: False
+  db_port: False
+  db_user: odoo
+  db_password: False
+```
+
+Then have something similar to this in your play book:
+
+```YAML
+---
+- name: Test playbook for the ofbiz role.
+  hosts: odoo10
+  roles:
+    - locp-odoo
+```
 
 License
 -------
 
-BSD
+GPLv3
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Developed by the
+[League of Crafty Programmers](http://www.locp.co.uk) Ltd.
+
+To raise issues or make contributions, please go to
+https://github.com/locp/ansible-role-odoo

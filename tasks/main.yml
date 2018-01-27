@@ -1,0 +1,67 @@
+---
+# tasks file for odoo
+- name: Enable Odoo 9 YUM repository
+  yum_repository:
+    name: odoo
+    description: Odoo Nightly repository
+    baseurl: http://nightly.odoo.com/9.0/nightly/rpm/
+    gpgcheck: yes
+    gpgkey: https://nightly.odoo.com/odoo.key
+  when:
+    - odoo_enable_odoo9_repo
+    - ansible_os_family == 'RedHat'
+
+- name: Enable Odoo 10 YUM repository
+  yum_repository:
+    name: odoo
+    description: Odoo Nightly repository
+    baseurl: http://nightly.odoo.com/10.0/nightly/rpm/
+    gpgcheck: yes
+    gpgkey: https://nightly.odoo.com/odoo.key
+  when:
+    - odoo_enable_odoo10_repo
+    - ansible_os_family == 'RedHat'
+
+- name: Enable Odoo 11 YUM repository
+  yum_repository:
+    name: odoo
+    description: Odoo Nightly repository
+    baseurl: http://nightly.odoo.com/11.0/nightly/rpm/
+    gpgcheck: yes
+    gpgkey: https://nightly.odoo.com/odoo.key
+  when:
+    - odoo_enable_odoo11_repo
+    - ansible_os_family == 'RedHat'
+
+- name: Wkhtmltopdf package
+  package:
+    name: wkhtmltopdf
+  when: odoo_install_wkhtmltopdf
+
+- name: Odoo package
+  package:
+    name: "{{ odoo_package_name }}"
+  when: not ansible_check_mode
+
+- name: Odoo configuration section
+  ini_file:
+    path: "{{ odoo_config_file }}"
+    section: options
+    option: "{{ item }}"
+    value: "{{ odoo_settings[item] }}"
+    owner: odoo
+    group: odoo
+    mode: 0650
+  with_items: "{{ odoo_settings }}"
+  notify:
+    - restart odoo
+  when:
+    - odoo_settings is defined
+    - not ansible_check_mode
+
+- name: Odoo Service
+  service:
+    enabled: yes
+    name: odoo
+    state: started
+  when: not ansible_check_mode

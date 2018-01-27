@@ -1,0 +1,3 @@
+---
+odoo_config_file: '/etc/odoo/openerp-server.conf'
+odoo_enable_odoo9_repo: true

@@ -1,0 +1,117 @@
+---
+# .kitchen.yml:  Test Kitchen configuration file.
+driver:
+  name: docker
+  use_sudo: false
+
+platforms:
+  - name: fedora-26
+    driver_config:
+      image: fedora:26
+      run_command: /usr/sbin/init
+      privileged: true
+      provision_command:
+        - dnf install -y python3-pip rsyslog
+        - pip3 install ansible==2.4.0.0
+        - sed -i 's/#UseDNS yes/UseDNS no/g' /etc/ssh/sshd_config
+        - sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
+        - sed -i 's/GSSAPIAuthentication yes/GSSAPIAuthentication no/g' /etc/ssh/sshd_config
+        - sed -i 's/#LogLevel INFO/LogLevel DEBUG/g' /etc/ssh/sshd_config
+        - systemctl enable rsyslog.service
+        - systemctl enable sshd.service
+
+  - name: centos-7
+    driver_config:
+      image: centos/systemd
+      run_command: /usr/sbin/init
+      privileged: true
+      provision_command:
+        - yum install -y epel-release
+        - yum install -y gcc python2-pip rsyslog initscripts python2-devel
+        - pip install ansible==2.4.0.0
+        - sed -i 's/#UseDNS yes/UseDNS no/g' /etc/ssh/sshd_config
+        - sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
+        - sed -i 's/GSSAPIAuthentication yes/GSSAPIAuthentication no/g' /etc/ssh/sshd_config
+        - sed -i 's/#LogLevel INFO/LogLevel DEBUG/g' /etc/ssh/sshd_config
+        - systemctl enable rsyslog.service
+        - systemctl enable sshd.service
+
+  # - name: ubuntu-14.04
+  #   driver_config:
+  #     hostname: kitchen
+  #     provision_command:
+  #       - apt-get install unzip
+
+provisioner:
+  additional_copy_path:
+    - tests
+  ansible_inventory: tests/inventory
+  ansible_verbose: false
+  # ansible_verbosity: 3
+  hosts: all
+  name: ansible_playbook
+  require_ansible_repo: false
+  require_chef_for_busser: false
+  require_chef_omnibus: false
+  require_pip: false
+  roles_path: ..
+
+verifier:
+  name: serverspec
+  sudo_path: true
+
+suites:
+  - name: CentOS7-odoo9
+    verifier:
+      patterns:
+        - tests/spec/centos7_odoo9_spec.rb
+    provisioner:
+      idempotency_test: true
+      playbook: tests/test9.yml
+    driver_config:
+      hostname: odoo9.local
+    includes:
+      - centos-7
+
+  - name: CentOS7-odoo10
+    verifier:
+      patterns:
+        - tests/spec/centos7_odoo10_spec.rb
+    provisioner:
+      idempotency_test: true
+      playbook: tests/test10.yml
+    driver_config:
+      hostname: odoo10.local
+    includes:
+      - centos-7
+
+  - name: CentOS7-odoo10-check
+    provisioner:
+      ansible_check: true
+      playbook: tests/test10.yml
+    driver_config:
+      hostname: odoo10.local
+    includes:
+      - centos-7
+
+  - name: Fedora26-odoo11
+    verifier:
+      patterns:
+        - tests/spec/fedora26_odoo11_spec.rb
+    provisioner:
+      idempotency_test: true
+      playbook: tests/test11.yml
+    driver_config:
+      hostname: odoo11.local
+    includes:
+      - fedora-26
+
+  # - name: ubuntu14
+  #   verifier:
+  #     patterns:
+  #       - spec/ubuntu14_spec.rb
+  #   provisioner:
+  #   idempotency_test: true
+  #     playbook: test.yml
+  #   includes:
+  #     - ubuntu-14.04

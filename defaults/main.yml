@@ -1,0 +1,8 @@
+---
+# defaults file for odoo
+odoo_config_file: '/etc/odoo/odoo.conf'
+odoo_enable_odoo9_repo: false
+odoo_enable_odoo10_repo: false
+odoo_enable_odoo11_repo: false
+odoo_install_wkhtmltopdf: false
+odoo_package_name: odoo
