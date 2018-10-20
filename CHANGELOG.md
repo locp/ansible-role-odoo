@@ -1,5 +1,18 @@
 # Change Log
 
+## [0.1.3](https://github.com/locp/ansible-role-odoo/tree/0.1.3) (2018-10-20)
+[Full Changelog](https://github.com/locp/ansible-role-odoo/compare/0.1.2...0.1.3)
+
+**Fixed bugs:**
+
+- CVE-2018-10855 Upgrade ansible to version 2.4.5 or later. [\#10](https://github.com/locp/ansible-role-odoo/issues/10)
+- Change log is not updated [\#9](https://github.com/locp/ansible-role-odoo/issues/9)
+
+**Merged pull requests:**
+
+- Bump Ansible version to 2.4.5.  Fixes \#10. [\#11](https://github.com/locp/ansible-role-odoo/pull/11) ([dallinb](https://github.com/dallinb))
+- Release 0.1.2 [\#8](https://github.com/locp/ansible-role-odoo/pull/8) ([dallinb](https://github.com/dallinb))
+
 ## [0.1.2](https://github.com/locp/ansible-role-odoo/tree/0.1.2) (2018-01-27)
 [Full Changelog](https://github.com/locp/ansible-role-odoo/compare/0.1.1...0.1.2)
 
